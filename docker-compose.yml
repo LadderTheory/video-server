@@ -1,0 +1,10 @@
+services:
+  video_server:
+    container_name: $TITLE
+    image: $TITLE
+    ports: 
+      - 80:80
+    volumes: 
+      - type: bind
+        source: /run/media/soms/Forklift Porn/stuff
+        target: /app/target

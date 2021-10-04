@@ -9,6 +9,8 @@ const port = 80
 
 const app = express()
 
+const TARGET = "./target"
+
 const vid_ext = [
     '.mp4',
     '.m4v',
@@ -50,13 +52,13 @@ const getAllFiles = function(dirPath) {
 }
 
 app.get('/', (request, response) => {
-    response.redirect(`/${DIRTYPE}/${encode("../stuff")}`);
+    response.redirect(`/${DIRTYPE}/${encode(TARGET)}`);
 });
 
 app.get('/pass/:pwd', (req,res) => {
     let pwd = decode(req.params.pwd)
     if (pwd === 'h') {
-        res.redirect(`/${DIRTYPE}/${encode("../stuff")}`)
+        res.redirect(`/${DIRTYPE}/${encode(TARGET)}`)
     }
 })
 
