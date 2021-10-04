@@ -11,11 +11,11 @@ const app = express()
 
 const vid_ext = [
     '.mp4',
-    '.wav'
+    '.m4v',
 ]
 
-const VIDTYPE = "vid"
-const DIRTYPE = "dir"
+const VIDTYPE = "v"
+const DIRTYPE = "d"
 
 const getAllFiles = function(dirPath) {
     console.log({dirPath});
@@ -23,7 +23,7 @@ const getAllFiles = function(dirPath) {
 
     arrayOfFiles = [{
         path: path.join(dirPath + "/.."),
-        title: "go up(beta)",
+        title: "go back (thank you tyler)",
         type: DIRTYPE
     }]
 
@@ -115,8 +115,8 @@ app.get(`/${VIDTYPE}/:path`, (req, res) => {
     console.log({track})
 
     res.send(
-        `<video id="videoplayer" controls width="90%" height="90%">` +
-        `<source src="/video/${req.params.path}"/>` +
+        `<video id="videoplayer" controls width="90%">` +
+        `<source src="/video/${req.params.path}" type="video/mp4"/>` +
         `<track default kind="subtitles" label="en" src="/track/${encode(track)}"/>` +
         `</video>`
     )
