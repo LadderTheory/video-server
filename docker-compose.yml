@@ -6,5 +6,5 @@ services:
       - 80:80
     volumes: 
       - type: bind
-        source: /run/media/soms/Forklift Porn/stuff
+        source: /your/source/here
         target: /app/target
