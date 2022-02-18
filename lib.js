@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require("path")
 
 const TARGET = "./target"
 
@@ -7,8 +8,8 @@ const vid_ext = [
     '.m4v',
 ]
 
-const VIDTYPE = "v"
-const DIRTYPE = "d"
+const VIDTYPE = "vid"
+const DIRTYPE = "dir"
 
 function getAllFiles(dirPath) {
     console.log({dirPath});
@@ -39,6 +40,8 @@ function getAllFiles(dirPath) {
         }
     })
 
+    console.log(arrayOfFiles)
+
     return arrayOfFiles
 }
 
@@ -62,8 +65,7 @@ function videoelement(v,t) {
 }
 
 function linkfrom(a) {
-    return 
-        `<a href="/${a.type}/${encode(a.path)}">${a.title}</a>`
+    return `<a href="/${a.type}/${encode(a.path)}">${a.title}</a>`
 }
 
 function encode(h) {
