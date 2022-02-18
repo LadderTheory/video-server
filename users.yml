@@ -1,0 +1,7 @@
+users:
+  - id: 1
+    uid: admin
+    password: changeme
+  - id: 2
+    uid: gregg
+    password: steven

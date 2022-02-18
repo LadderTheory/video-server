@@ -8,3 +8,4 @@ services:
       - type: bind
         source: /run/media/soms/Forklift Porn/stuff
         target: /app/target
+        readonly: true
