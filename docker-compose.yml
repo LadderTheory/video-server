@@ -6,6 +6,9 @@ services:
       - 1337:80
     volumes: 
       - type: bind
-        source: /media/davista/Forklift Porn/fp
+        source: /home/davista/Documents/libfprint
         target: /app/target
         read_only: true
+      - type: bind
+        source: ./users.yml
+        target: /app/users.yml

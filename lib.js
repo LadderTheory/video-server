@@ -1,7 +1,5 @@
 const fs = require('fs')
-const path = require("path")
-
-const TARGET = "./target"
+const path = require('path')
 
 const vid_ext = [
     '.mp4',
@@ -11,15 +9,28 @@ const vid_ext = [
 const VIDTYPE = "vid"
 const DIRTYPE = "dir"
 
+var homedir
+
 function getAllFiles(dirPath) {
     console.log({dirPath});
     files = fs.readdirSync(dirPath)
 
-    arrayOfFiles = [{
+    if (!homedir) {
+        homedir = dirPath
+    }
+
+    arrayOfFiles = []
+    
+    let a=  {
         path: path.join(dirPath + "/.."),
         title: "go back (thank you tyler)",
         type: DIRTYPE
-    }]
+    }
+
+    if (homedir != dirPath) {
+        arrayOfFiles.push(a)
+    }
+
 
     files.forEach(function(file) {
         let p = path.resolve(path.join(dirPath, "/", file))
@@ -40,7 +51,7 @@ function getAllFiles(dirPath) {
         }
     })
 
-    console.log(arrayOfFiles)
+    //console.log(arrayOfFiles)
 
     return arrayOfFiles
 }
@@ -76,4 +87,4 @@ function decode(h) {
     return Buffer.from(h, "base64").toString()
 }
 
-module.exports = { TARGET, DIRTYPE, VIDTYPE, vid_ext, dirtable, videoelement, encode, decode }
+module.exports = { DIRTYPE, VIDTYPE, vid_ext, dirtable, videoelement, encode, decode }

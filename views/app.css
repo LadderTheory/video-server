@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(to bottom left, #000000, #683691) fixed;
+}
+
+h2 {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field {
+    position: relative;
+    margin-top: 2rem;
+}
+
+.input-field input {
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+form .input-field:first-child {
+    margin-bottom: 1.5rem;
+}
+
+form input[type="submit"] {
+    background: linear-gradient(to left, #4776E6, #8e54e9);
+    color: white;
+    border-radius: 4px;
+    margin-top: 2rem;
+    padding: 0.4rem;
+}

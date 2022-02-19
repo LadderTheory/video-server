@@ -4,17 +4,63 @@ const cookieParser = require('cookie-parser')
 const fs = require("fs")
 const path = require("path")
 const lib = require('./lib')
+const users = require('./users')
 
-const { TARGET, VIDTYPE, DIRTYPE, vid_ext, encode, decode, dirtable} = require('./lib')
+const TARGET = "../libfprint"
 
-const port = 80
+const { VIDTYPE, DIRTYPE, vid_ext, encode, decode, dirtable} = require('./lib')
+
+const port = 1337
 
 const app = express()
 
+app.use((req,res,next) => {
+    console.log(req.originalUrl)
+    next()
+})
+
 app.use(sessions({
-    secret: "thankyoutyler",
-    saveUninitialized: true
+    secret: `${Math.random()}`,
+    saveUninitialized: true,
+    resave: false
 }))
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
+
+app.use(express.static(__dirname))
+
+app.use(cookieParser())
+
+var session
+var originalUrl
+
+app.post('/user', (req, res) => {
+    let user = users.getUser(req.body.username)
+    if (user && (user.password == req.body.password)) {
+            session = req.session
+            session.userid = req.body.username
+            console.log('/user', req.session)
+            console.log('orgurl', originalUrl)
+            res.redirect(originalUrl? originalUrl : '/')
+    }else{
+        res.send('Invalid username or password')
+    }
+})
+
+app.use((req, res, next) => {
+    session = req.session
+    if (session.userid) {
+        next()
+    }else{
+        if (req.originalUrl != '/') {
+            originalUrl = req.originalUrl
+            res.redirect('/')
+        }else{
+            res.sendFile('views/login.html', {root:__dirname})
+        }
+    }
+})
 
 app.get('/', (request, response) => {
     response.redirect(`/${DIRTYPE}/${encode(TARGET)}`);
@@ -25,8 +71,6 @@ app.get(`/${DIRTYPE}/:path`, (req, res) => {
     console.log(DIRTYPE, decoded)
 
     let sendme = dirtable(decoded)
-
-    console.log("get", sendme)
 
     res.send(sendme)
 })
@@ -58,6 +102,13 @@ app.get("/track/:path", (req, res) => {
     res.sendFile(decode(req.params.path))
 })  
 
+app.get('/logout',(req,res) => {
+    req.session.destroy()
+    res.redirect('/')
+})
 
+app.use((req,res,next) => {
+    res.redirect('/')
+})
 
 app.listen(port, console.log(`App Listening to port ${port}`));
